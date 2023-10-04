@@ -90,6 +90,8 @@ def update_world():
             cx,cy=hx,hy #위치 강제 일치
             del points[0] # 도착했던 점 삭제
             set_new_target_arrow()
+    elif points: #목표 지점이 없는 상황에서 새 목표 지점이 추가되면
+        set_new_target_arrow()
 
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 hide_cursor()
