@@ -41,19 +41,26 @@ def reset_world():
     action =3
     
     points=[(100,900),(1200,800),(500,100)]
-    #set_new_target_arrow()
+    set_new_target_arrow()
 
 def set_new_target_arrow():
     global sx,sy,hx,hy,t
     global action
     global frame 
+    global target_exists
     
-    sx,sy=cx,cy # p1 : 시작점
-    #hx,hy=50,50
-    hx,hy=random.randint(0,TUK_WIDTH),random.randint(0,TUK_HEIGHT) # p2 : 끝점
-    t=0.0
-    action = 1 if sx<hx else 0
-    frame=0
+    if points: #목표가 남아있으면
+        sx,sy=cx,cy # p1 : 시작점
+        #hx,hy=50,50
+        hx,hy=points[0] # p2 : 끝점
+        t=0.0
+        action = 1 if sx<hx else 0
+        frame=0
+        target_exists =True
+    else:
+        action=3 if action==1 else 2 #이전 이동방향을 고정
+        frame =0
+        target_exists=False
 
 def rander_world():
     clear_canvas()
@@ -72,14 +79,15 @@ def update_world():
     global action
 
     frame = (frame + 1) % 8
-
-    '''if t<=1.0:
-        cx=(1-t)*sx+t*hx # c : current, s : start, h : end
-        cy=(1-t)*sy+t*hy
-        t+=0.001
-    else:
-        cx,cy=hx,hy
-        set_new_target_arrow()'''
+    if target_exists:
+        if t<=1.0:
+            cx=(1-t)*sx+t*hx # c : current, s : start, h : end
+            cy=(1-t)*sy+t*hy
+            t+=0.001
+        else: #목표에 도달하면
+            cx,cy=hx,hy #위치 강제 일치
+            del points[0] # 도착했던 점 삭제
+            set_new_target_arrow()
 
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 hide_cursor()
