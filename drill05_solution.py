@@ -1,11 +1,14 @@
 import os
 from pico2d import *
+import random
 os.chdir(os.path.dirname(__file__))
 TUK_WIDTH, TUK_HEIGHT = 1280, 1024
 
 
 def load_resource():
     global TUK_ground,character
+    global arrow
+    arrow=load_image('hand_arrow.png')
     TUK_ground = load_image('TUK_GROUND.png')
     character = load_image('animation_sheet.png')
 
@@ -22,16 +25,21 @@ def handle_events():
     pass
 
 
-def reset_world(TUK_WIDTH, TUK_HEIGHT):
+def reset_world():
     global running,x,y,frame
+    global hx,hy
     running = True
     x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
     frame = 0
 
+    hx,hy=TUK_WIDTH-50,TUK_HEIGHT-50
+    hx,hy=random.randint(0,TUK_WIDTH),random.randint(0,TUK_HEIGHT)
 
-def rand_world(TUK_WIDTH, TUK_HEIGHT, TUK_ground, character, x, y, frame):
+
+def rander_world():
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
+    arrow.draw(hx,hy)
     character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
     update_canvas()
 
@@ -44,10 +52,10 @@ def update_world():
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 hide_cursor()
 load_resource()
-reset_world(TUK_WIDTH, TUK_HEIGHT)
+reset_world()
 
 while running:
-    rand_world(TUK_WIDTH, TUK_HEIGHT, TUK_ground, character, x, y, frame) #필드의 현재 내용 그림 
+    rander_world() #필드의 현재 내용 그림 
     handle_events() # 사용자 입력
     update_world() # 필드 내의 객체들의 상호작용 계산, update
 
