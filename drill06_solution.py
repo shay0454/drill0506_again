@@ -41,9 +41,9 @@ def reset_world():
     cx, cy = TUK_WIDTH // 2, TUK_HEIGHT // 2
     frame = 0
     action =3
-    
     points=[]
     set_new_target_arrow()
+
 
 def set_new_target_arrow():
     global sx,sy,hx,hy,t
@@ -63,6 +63,7 @@ def set_new_target_arrow():
         action=3 if action==1 else 2 #이전 이동방향을 고정
         frame =0
         target_exists=False
+
 
 def rander_world():
     clear_canvas()
@@ -92,6 +93,7 @@ def update_world():
             set_new_target_arrow()
     elif points: #목표 지점이 없는 상황에서 새 목표 지점이 추가되면
         set_new_target_arrow()
+
 
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 hide_cursor()
