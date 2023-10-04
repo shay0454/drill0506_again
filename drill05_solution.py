@@ -41,11 +41,15 @@ def reset_world():
 
 def set_new_target_arrow():
     global sx,sy,hx,hy,t
-
+    global action
+    global frame 
+    
     sx,sy=cx,cy # p1 : 시작점
     #hx,hy=50,50
     hx,hy=random.randint(0,TUK_WIDTH),random.randint(0,TUK_HEIGHT) # p2 : 끝점
     t=0.0
+    action = 1 if sx<hx else 0
+    frame=0
 
 def rander_world():
     clear_canvas()
@@ -62,7 +66,6 @@ def update_world():
     global action
 
     frame = (frame + 1) % 8
-    action = 1 if cx<hx else 0
 
     if t<=1.0:
         cx=(1-t)*sx+t*hx # c : current, s : start, h : end
